@@ -1,69 +1,55 @@
 import Link from 'next/link';
 
-const sections = [
-  {
-    title: 'User Management & Plans',
-    items: [
-      'Email + password auth with JWT cookies',
-      'FREE plan limits enforced via middleware helpers',
-      'Usage counters for AI generations and hosted games',
-    ],
-  },
-  {
-    title: 'Quiz Creation & Review',
-    items: [
-      'Quiz, Question, Option models with validation',
-      'Draft → Published lifecycle and audit fields',
-      'Review metadata for AI-generated content',
-    ],
-  },
-  {
-    title: 'AI Quiz Generation',
-    items: [
-      'Upload PDFs or fetch URLs and create AI jobs',
-      'Azure OpenAI integration with deterministic output schema',
-      'Async job orchestration and clear failure reporting',
-    ],
-  },
-  {
-    title: 'Real-time Game Hosting',
-    items: [
-      'Game + Player session models with scoring utilities',
-      'Plan-aware player caps and lobby validation',
-      'WebSocket-friendly payload contracts for events',
-    ],
-  },
-];
-
 export default function HomePage() {
   return (
-    <div className="space-y-10">
-      <section className="space-y-3">
-        <p>
-          This monorepo contains the reference implementation requested in the PRDs. Explore the{' '}
-          <Link href="/docs/deployment-vercel" className="underline">deployment guide</Link> to learn how to run it on Vercel.
-        </p>
-        <p>
-          The backend is powered by Next.js App Router, Prisma, and Azure OpenAI integrations. Unit tests cover critical
-          business logic including plan limits, quiz validation, and the game state machine.
-        </p>
-        <div className="bg-blue-600 text-white p-4 rounded-lg inline-block">
-          <Link href="/dashboard" className="text-xl font-semibold hover:underline">
-            🚀 Try the Live App Dashboard
-          </Link>
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+      <div className="max-w-2xl mx-auto text-center space-y-8">
+        <div className="space-y-4">
+          <h1 className="text-5xl font-bold text-white">Free Kahoot</h1>
+          <p className="text-xl text-slate-300">
+            AI-powered quiz creation and real-time game hosting
+          </p>
         </div>
-      </section>
-
-      {sections.map((section) => (
-        <section key={section.title} className="bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-2">
-          <h2 className="text-xl font-semibold">{section.title}</h2>
-          <ul className="list-disc list-inside text-slate-300 text-sm space-y-1">
-            {section.items.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
-      ))}
+        
+        <div className="space-y-6">
+          <div className="bg-slate-800 p-8 rounded-lg">
+            <h2 className="text-2xl font-semibold text-white mb-4">Features</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left text-slate-300">
+              <div>
+                <h3 className="font-semibold text-white mb-2">🎯 Quiz Creation</h3>
+                <p className="text-sm">Build quizzes with multiple choice questions</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white mb-2">🤖 AI Generation</h3>
+                <p className="text-sm">Generate quizzes from URLs and content</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white mb-2">🎮 Real-time Games</h3>
+                <p className="text-sm">Host live quiz sessions with players</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white mb-2">📊 Analytics</h3>
+                <p className="text-sm">Track usage and game statistics</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              href="/auth" 
+              className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Get Started →
+            </Link>
+            <Link 
+              href="/docs/deployment-vercel" 
+              className="bg-slate-800 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-slate-700 transition-colors"
+            >
+              View Docs
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
