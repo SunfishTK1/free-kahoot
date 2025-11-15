@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Brain, Users, Loader2, AlertCircle } from 'lucide-react';
 
-export default function JoinGamePage() {
+function JoinGameContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const prefilledCode = searchParams?.get('code') || '';
@@ -195,5 +195,17 @@ export default function JoinGamePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function JoinGamePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-slate-900 to-blue-900 flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    }>
+      <JoinGameContent />
+    </Suspense>
   );
 }
