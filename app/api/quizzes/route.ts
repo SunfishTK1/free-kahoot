@@ -1,6 +1,5 @@
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
-import { getCurrentUser } from '@/src/lib/auth';
 import { json, error } from '@/src/server/api/responses';
 import { createQuiz, listQuizzes } from '@/src/server/services/quizService';
 
@@ -20,18 +19,17 @@ const quizSchema = z.object({
   questions: z.array(questionSchema).min(1),
 });
 
+// Demo user ID for non-auth version
+const DEMO_USER_ID = 'demo-user-id';
+
 export async function GET() {
-  const user = await getCurrentUser();
-  if (!user) return error('Unauthorized', 401);
-  const quizzes = await listQuizzes(user.id);
+  const quizzes = await listQuizzes(DEMO_USER_ID);
   return json(quizzes);
 }
 
 export async function POST(req: NextRequest) {
-  const user = await getCurrentUser();
-  if (!user) return error('Unauthorized', 401);
   const payload = quizSchema.safeParse(await req.json());
   if (!payload.success) return error('Invalid quiz payload', 422);
-  const quiz = await createQuiz(user.id, payload.data);
+  const quiz = await createQuiz(DEMO_USER_ID, payload.data);
   return json(quiz, 201);
 }

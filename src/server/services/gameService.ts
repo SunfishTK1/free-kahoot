@@ -25,6 +25,17 @@ export async function createGameSession(hostId: string, quizId: string, maxPlaye
   return game;
 }
 
+export async function listGameSessions(hostId: string) {
+  return prisma.gameSession.findMany({
+    where: { hostId },
+    include: {
+      quiz: { select: { title: true } },
+      players: { select: { id: true, nickname: true } },
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+}
+
 async function generateGameCode() {
   while (true) {
     const code = Math.random().toString(36).slice(2, 7).toUpperCase();

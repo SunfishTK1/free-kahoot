@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface Quiz {
   id: string;
@@ -21,34 +20,15 @@ interface Game {
 }
 
 export default function Dashboard() {
-  const [user, setUser] = useState<any>(null);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [games, setGames] = useState<Game[]>([]);
   const [activeTab, setActiveTab] = useState('quizzes');
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
-    checkAuth();
+    loadQuizzes();
+    loadGames();
   }, []);
-
-  const checkAuth = async () => {
-    try {
-      const res = await fetch('/api/auth/me');
-      if (res.ok) {
-        const userData = await res.json();
-        setUser(userData.data);
-        loadQuizzes();
-        loadGames();
-      } else {
-        router.push('/auth');
-      }
-    } catch (error) {
-      router.push('/auth');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const loadQuizzes = async () => {
     try {
@@ -59,6 +39,8 @@ export default function Dashboard() {
       }
     } catch (error) {
       console.error('Failed to load quizzes');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -71,15 +53,6 @@ export default function Dashboard() {
       }
     } catch (error) {
       console.error('Failed to load games');
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      router.push('/auth');
-    } catch (error) {
-      console.error('Logout failed');
     }
   };
 
@@ -98,15 +71,15 @@ export default function Dashboard() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div>
             <h1 className="text-xl font-bold">Free Kahoot</h1>
-            <p className="text-sm text-slate-400">Welcome, {user?.name}</p>
+            <p className="text-sm text-slate-400">Quiz Creation Platform</p>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-slate-400">Plan: {user?.planType}</span>
+            <span className="text-sm text-slate-400">Demo Mode</span>
             <button
-              onClick={handleLogout}
+              onClick={() => window.location.href = '/'}
               className="bg-slate-700 px-4 py-2 rounded hover:bg-slate-600"
             >
-              Logout
+              Home
             </button>
           </div>
         </div>
