@@ -47,6 +47,11 @@ export default function HomePage() {
           The backend is powered by Next.js App Router, Prisma, and Azure OpenAI integrations. Unit tests cover critical
           business logic including plan limits, quiz validation, and the game state machine.
         </p>
+        <div className="bg-blue-600 text-white p-4 rounded-lg inline-block">
+          <Link href="/dashboard" className="text-xl font-semibold hover:underline">
+            🚀 Try the Live App Dashboard
+          </Link>
+        </div>
       </section>
 
       {sections.map((section) => (
